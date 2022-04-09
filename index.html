@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href=".">
+        <script type="module" src="./main.js"></script>
+        <link href="./index.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="form">
+            <label for="edition">Edition Code</label>
+            <input type="text" id="editionCodeInput" name="edition" minlength="3" maxlength="5">
+            <label for="number">Collection Number</label>
+            <input type="number" id="collectionNumberInput" name="number" maxlength="3">
+
+            <button id="addToCardListButton">Add to card list</button>
+        </div>
+
+        <div class="picture-wrapper">
+            <img id="cardPicture">
+            <div class="price-wrapper">
+                <p id="euPrice"></p>
+                <p id="euPriceFoil"></p>
+            </div>
+        </div>
+
+        <div class="cardmarket-export">
+            <button id="exportToCardMarket">Export to CardMarket</button>
+        </div>
+    </body>
+</html>

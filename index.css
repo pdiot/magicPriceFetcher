@@ -1,0 +1,21 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.picture-wrapper {
+  max-width: 300px;
+  max-height: 500px;
+}
+
+.picture-wrapper #cardPicture {
+  max-width: 200px;
+  max-height: 400px;
+}

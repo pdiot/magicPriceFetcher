@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "rxjs": "^7.5.5",
+    "snowpack": "^3.8.8"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25"
+  },
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  }
+  
+}
