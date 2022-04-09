@@ -6,7 +6,7 @@
         <link href="./index.css" rel="stylesheet">
     </head>
     <body>
-        <div class="form">
+        <div class="form" id="formGroup">
             <label for="edition">Edition Code</label>
             <input type="text" id="editionCodeInput" name="edition" minlength="3" maxlength="5">
             <label for="number">Collection Number</label>
@@ -24,7 +24,17 @@
         </div>
 
         <div class="cardmarket-export">
-            <button id="exportToCardMarket">Export to CardMarket</button>
+            <button id="showTableButton">Card List to Sell</button>
+            <table id="cardListTable">
+                <thead>
+                    <tr>
+                        <th>Cards to sell</th>
+                    </tr>
+                </thead>
+                <tbody id="cardListBody">
+
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
