@@ -21,10 +21,12 @@ let cardListBody;
 let formGroup;
 let cardImageFront;
 let cardImageBack;
+let saveButton;
 
 let hideTable;
 
 let currentCard;
+let textFile = null;
 
 main();
 
@@ -47,6 +49,7 @@ function init() {
         formGroup = document.querySelector('#formGroup');
         cardImageFront = document.querySelector('#cardPicture');
         cardImageBack = document.querySelector('#cardPictureBack');
+        saveButton = document.querySelector('#saveButton');
 
         formGroup.addEventListener('keydown', (event) => {
             if (event?.key === 'Enter') {
@@ -55,6 +58,8 @@ function init() {
         });
 
         displayTableToggle();
+
+        handleSave();
 
         editionInput.addEventListener('input', () => {
             $edition_code.next(editionInput.value);
@@ -107,9 +112,13 @@ function displayTableToggle() {
 function fetchPreview() {
     getCardData(editionInput.value, collectorInput.value, (event) => {
         const response = JSON.parse(event.currentTarget.response);
-        currentCard = response;
-        setCardImage();
-        setPrices(response.prices);
+        if (response?.status === '404') {
+            console.log('404');
+        } else {
+            currentCard = response;
+            setCardImage();
+            setPrices(response.prices);
+        }
     });
 }
 
@@ -130,7 +139,10 @@ function getCardData(editionCode, collectorNumber, callback) {
 }
 
 function setCardImage() {
-    if (currentCard.card_faces) {
+    if (currentCard.image_uris) {
+        cardImageFront.setAttribute('src', currentCard.image_uris.png);
+        cardImageBack.setAttribute('src', '');
+    } else if (currentCard.card_faces) {
         cardImageFront.setAttribute(
             'src',
             currentCard.card_faces[0].image_uris.png
@@ -139,9 +151,6 @@ function setCardImage() {
             'src',
             currentCard.card_faces[1].image_uris.png
         );
-    } else {
-        cardImageFront.setAttribute('src', currentCard.image_uris.png);
-        cardImageBack.setAttribute('src', '');
     }
 }
 
@@ -175,8 +184,13 @@ function addCardToList() {
     if (editionInput.value && collectorInput.value) {
         if (!currentCard) {
             getCardData(editionInput.value, collectorInput.value, (event) => {
-                currentCard = JSON.parse(event.currentTarget.response);
-                addCurrentCard();
+                let response = JSON.parse(event.currentTarget.response);
+                if (response?.status === '404') {
+                    console.log('404');
+                } else {
+                    currentCard = response;
+                    addCurrentCard();
+                }
             });
         } else {
             addCurrentCard();
@@ -312,4 +326,49 @@ function fillTable() {
             deleteCell.appendChild(deleteBtn);
         }
     }
+}
+
+function handleSave() {
+    saveButton.addEventListener(
+        'click',
+        function () {
+            var link = document.createElement('a');
+            link.setAttribute('download', 'cardList.txt');
+            link.href = makeTextFile();
+            document.body.appendChild(link);
+
+            // wait for the link to be added to the document
+            window.requestAnimationFrame(function () {
+                var event = new MouseEvent('click');
+                link.dispatchEvent(event);
+                document.body.removeChild(link);
+            });
+        },
+        false
+    );
+}
+
+function makeTextFile() {
+    const cardList = JSON.parse(localStorage.getItem('cardList'));
+
+    let text = '';
+    for (let card of cardList) {
+        text =
+            text +
+            `Set ${card.editionCode}, code ${card.collectorNumber}, name ${card.cardName}, quantity ${card.quantity}
+`;
+    }
+
+    var data = new Blob([text], { type: 'text/plain' });
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+    if (textFile !== null) {
+        window.URL.revokeObjectURL(textFile);
+    }
+
+    textFile = window.URL.createObjectURL(data);
+
+    // returns a URL you can use as a href
+    return textFile;
 }
