@@ -1,5 +1,7 @@
 import { BehaviorSubject, combineLatest, find, of, subscribeOn } from 'rxjs';
 
+import './index.scss';
+
 let $edition_code;
 let $collector_number;
 
@@ -17,6 +19,8 @@ let showTableButton;
 let cardListTable;
 let cardListBody;
 let formGroup;
+let cardImageFront;
+let cardImageBack;
 
 let hideTable;
 
@@ -41,6 +45,8 @@ function init() {
         cardListTable = document.querySelector('#cardListTable');
         cardListBody = document.querySelector('#cardListBody');
         formGroup = document.querySelector('#formGroup');
+        cardImageFront = document.querySelector('#cardPicture');
+        cardImageBack = document.querySelector('#cardPictureBack');
 
         formGroup.addEventListener('keydown', (event) => {
             if (event?.key === 'Enter') {
@@ -102,7 +108,7 @@ function fetchPreview() {
     getCardData(editionInput.value, collectorInput.value, (event) => {
         const response = JSON.parse(event.currentTarget.response);
         currentCard = response;
-        setCardImage(response.image_uris.png);
+        setCardImage();
         setPrices(response.prices);
     });
 }
@@ -123,9 +129,20 @@ function getCardData(editionCode, collectorNumber, callback) {
     xhr.send();
 }
 
-function setCardImage(src) {
-    const DOMImage = document.querySelector('#cardPicture');
-    DOMImage.setAttribute('src', src);
+function setCardImage() {
+    if (currentCard.card_faces) {
+        cardImageFront.setAttribute(
+            'src',
+            currentCard.card_faces[0].image_uris.png
+        );
+        cardImageBack.setAttribute(
+            'src',
+            currentCard.card_faces[1].image_uris.png
+        );
+    } else {
+        cardImageFront.setAttribute('src', currentCard.image_uris.png);
+        cardImageBack.setAttribute('src', '');
+    }
 }
 
 function setPrices(prices) {
@@ -135,8 +152,8 @@ function setPrices(prices) {
     if (!euPriceFoil) {
         euPriceFoil = document.querySelector('#euPriceFoil');
     }
-    euPrice.textContent = prices.eur;
-    euPriceFoil.textContent = prices.eur_foil;
+    euPrice.textContent = prices.eur + ' €';
+    euPriceFoil.textContent = prices.eur_foil + ' €';
 }
 
 function typewatch() {
@@ -164,6 +181,9 @@ function addCardToList() {
         } else {
             addCurrentCard();
         }
+    }
+    if (!hideTable) {
+        fillTable();
     }
 }
 

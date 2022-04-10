@@ -1,0 +1,92 @@
+/* override browser default */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* use viewport-relative units to cover page fully */
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* include border and padding in element width and height */
+* {
+  box-sizing: border-box;
+}
+
+
+/* full-sized  container that fills up the page */
+.app {
+    height: 100%;
+    width: 100%;
+  
+    /* example padding, font-size, background, etc */
+    padding: 10px;
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    height: 19%;
+    align-content: center;
+}
+
+.main {
+    display: flex;
+    height: 80%;
+
+    .form {
+
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+    
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    }
+
+    .picture-wrapper {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+      
+        .pictures {
+          display: flex;
+          height: 75%;
+      
+          img {
+            object-fit: contain;
+            width: 400px;
+          }
+        }
+        .price-wrapper {
+          display: flex;
+          height: 25%;
+      
+          p {
+            padding: 1em;
+          }
+        }
+    }
+
+    .list {
+        height: fit-content;
+    }
+      
+}
+
+

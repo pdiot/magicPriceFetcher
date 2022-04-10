@@ -3,39 +3,49 @@
     <head>
         <base href=".">
         <script type="module" src="./main.js"></script>
-        <link href="./index.css" rel="stylesheet">
     </head>
     <body>
-        <div class="form" id="formGroup">
-            <label for="edition">Edition Code</label>
-            <input type="text" id="editionCodeInput" name="edition" minlength="3" maxlength="5">
-            <label for="number">Collection Number</label>
-            <input type="number" id="collectionNumberInput" name="number" maxlength="3">
-
-            <button id="addToCardListButton">Add to card list</button>
-        </div>
-        
-
-        <div class="picture-wrapper">
-            <img id="cardPicture">
-            <div class="price-wrapper">
-                <p id="euPrice"></p>
-                <p id="euPriceFoil"></p>
+        <div class="app">
+            <div class="header">
+                Header
             </div>
-        </div>
-
-        <div class="cardmarket-export">
-            <button id="showTableButton">Card List to Sell</button>
-            <table id="cardListTable">
-                <thead>
-                    <tr>
-                        <th>Cards to sell</th>
-                    </tr>
-                </thead>
-                <tbody id="cardListBody">
-
-                </tbody>
-            </table>
+            <div class="main">
+                <div class="form" id="formGroup">
+                    <label for="edition">Edition Code</label>
+                    <input type="text" id="editionCodeInput" name="edition" minlength="3" maxlength="5">
+                    <label for="number">Collection Number</label>
+                    <input type="number" id="collectionNumberInput" name="number" maxlength="3">
+        
+                    <button id="addToCardListButton">Add to card list</button>
+                </div>
+                
+        
+                <div class="picture-wrapper">
+                    <div class="pictures">
+                        <img id="cardPicture">
+                        <img id="cardPictureBack">
+                    </div>
+                    <div class="price-wrapper">
+                        <p id="euPrice"></p>
+                        <p id="euPriceFoil"></p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="list">
+                <button id="showTableButton">Card List to Sell</button>
+                <table id="cardListTable">
+                    <thead>
+                        <tr>
+                            <th>Cards to sell</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cardListBody">
+    
+                    </tbody>
+                </table>
+            </div>
+            
         </div>
     </body>
 </html>
